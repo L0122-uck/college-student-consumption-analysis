@@ -294,3 +294,46 @@ plt.savefig("cluster_heatmap.png", dpi=300, bbox_inches="tight"
 )
 
 plt.show()
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+
+# PCA降维
+pca = PCA(n_components=2)
+
+X_pca = pca.fit_transform(X)
+
+
+# 创建PCA结果DataFrame
+pca_df = pd.DataFrame(
+    X_pca,
+    columns=['PC1', 'PC2']
+)
+
+pca_df['cluster'] = df['cluster']
+
+
+# 绘制聚类结果
+plt.figure(figsize=(8,6))
+
+plt.scatter(
+    pca_df['PC1'],
+    pca_df['PC2'],
+    c=pca_df['cluster'],
+    s=50
+)
+
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+
+plt.title(
+    "PCA Visualization of Student Consumption Clusters"
+)
+
+plt.savefig(
+    "images/pca_cluster.png",
+    dpi=300,
+    bbox_inches='tight'
+)
+
+plt.show()
